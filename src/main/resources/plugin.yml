@@ -1,0 +1,17 @@
+main: fr.cel.dbdplugin.DBDPlugin
+name: DBDPlugin
+version: 0.1-SNAPSHOT
+api-version: 1.19
+commands:
+  hello:
+    description: Commande de test
+  dbditem:
+    description: Commande pour se give les items DBD
+  getspeedplayer:
+    description: Commande pour savoir la vitesse du joueur
+    usage: /getspeedplayer
+  testresourcepack:
+    description: Commande pour voir si le resource pack est installé
+    usage: /testresourcepack
+  start:
+    description: Commande pour lancer la partie
