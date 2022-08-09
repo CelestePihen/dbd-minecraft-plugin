@@ -8,6 +8,7 @@
 - [À propos](#à-propos)
 - [Autres](#autres)
 - [Pack de ressources](#pack-de-ressources)
+- [TODO](#todo)
 
 ## À propos
 
@@ -19,6 +20,24 @@ suspendant à des crochets ou en les tuant grâce à leur compétence qui leur e
 
 Ce plugin utilise un resourcepack custom qui permet d'avoir des interfaces customs etc... Ils sont sous la forme de caractères Unicodes (\u....).
 Pour l'instant, j'ai seulement réutilisé les icônes venant du jeu.
+
+## TODO
+ Tueurs :
+  - Le Spectre (https://deadbydaylight.fandom.com/fr/wiki/Philip_Ojomo#%C3%89quipement)
+   - vitesse du tueur
+   - arme
+
+ Survivants :
+  - ...
+
+ Mode de jeu :
+  - Déroulement partie (Générateurs / Portes / Crochet)
+  - Scoreboard
+  - Pouvoir choisir la team
+
+ Autres :
+ - Resource Pack
+ - Mettre en aventure quand on fait la commande /join
 
 ## Autres
 
