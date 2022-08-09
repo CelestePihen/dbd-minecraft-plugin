@@ -17,8 +17,8 @@ public class TabComplete implements TabCompleter {
             if(args.length == 1) {
 
                 ArrayList<String> items = new ArrayList<String>();
-                items.add("spectre1");
-                items.add("spectre2");
+                items.add("spectreInvi");
+                items.add("spectreNoInvi");
 
                 return items;
 

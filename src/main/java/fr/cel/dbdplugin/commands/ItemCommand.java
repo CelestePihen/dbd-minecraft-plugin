@@ -1,17 +1,19 @@
 package fr.cel.dbdplugin.commands;
 
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
 
-import fr.cel.dbdplugin.utils.ItemBuilder;
+import fr.cel.dbdplugin.manager.GameManager;
 
 public class ItemCommand implements CommandExecutor {
+
+    private GameManager gameManager;
+
+    public ItemCommand(GameManager gameManager) {
+        this.gameManager = gameManager;
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -28,15 +30,12 @@ public class ItemCommand implements CommandExecutor {
             
             switch (item) {
 
-                case "spectre1":
-                ItemStack itemSpectre = new ItemBuilder(Material.STICK).addEnchant(Enchantment.ARROW_INFINITE, 1)
-                .addItemFlags(ItemFlag.HIDE_ENCHANTS).setDisplayName("§2Invisibilité").toItemStack();
-                player.getInventory().addItem(itemSpectre);
+                case "spectreInvi":
+                player.getInventory().addItem(gameManager.getItemKiller().spectreInvi);
                 break;
 
-                case "spectre2":
-                ItemStack itemSpectre2 = new ItemBuilder(Material.STICK).setDisplayName("§4Invisibilité").toItemStack();
-                player.getInventory().addItem(itemSpectre2);
+                case "spectreNoInvi":
+                player.getInventory().addItem(gameManager.getItemKiller().spectreNoInvi);
                 break;
             }
 

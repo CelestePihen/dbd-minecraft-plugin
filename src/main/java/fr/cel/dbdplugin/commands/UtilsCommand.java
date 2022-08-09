@@ -10,6 +10,8 @@ import org.bukkit.inventory.Inventory;
 
 import fr.cel.dbdplugin.DBDPlugin;
 import fr.cel.dbdplugin.utils.ItemBuilder;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.title.TitlePart;
 
 public class UtilsCommand implements CommandExecutor {
 
@@ -31,11 +33,11 @@ public class UtilsCommand implements CommandExecutor {
         }
 
         if (label.equalsIgnoreCase("testresourcepack")) {
-            player.sendTitle("Étoile : \uF901", "", 10, 70, 20);
+            player.sendTitlePart(TitlePart.TITLE, Component.text("Étoile : \uF901"));
             player.sendMessage("Test Resource Pack : \uF901");
 
             String spaceInventoryName = "\uF80A\uF809";
-            Inventory inventoryTest = Bukkit.createInventory(null, (9 * 6), "§f" + spaceInventoryName + "\uF902");
+            Inventory inventoryTest = Bukkit.createInventory(null, (9*6), Component.text("§f" + spaceInventoryName + "\uF902"));
             inventoryTest.setItem(20, new ItemBuilder(Material.GOLDEN_HOE).toItemStack());
             inventoryTest.setItem(21, new ItemBuilder(Material.GOLDEN_HOE).toItemStack());
             inventoryTest.setItem(29, new ItemBuilder(Material.GOLDEN_HOE).toItemStack());

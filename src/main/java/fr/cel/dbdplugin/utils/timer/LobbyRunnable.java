@@ -8,30 +8,34 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.cel.dbdplugin.DBDPlugin;
 import fr.cel.dbdplugin.manager.GameManager;
 import fr.cel.dbdplugin.manager.GameState;
-import net.md_5.bungee.api.ChatColor;
+import net.kyori.adventure.text.Component;
 
 public class LobbyRunnable extends BukkitRunnable {
 
-    public int timer = 61;
+    public int timer = 31;
     public boolean start = false;
 
     private DBDPlugin main;
     private GameManager gameManager;
-    public LobbyRunnable(DBDPlugin main, GameManager gameManager) { this.main = main; }
+
+    public LobbyRunnable(DBDPlugin main, GameManager gameManager) {
+        this.main = main;
+        this.gameManager = gameManager;
+    }
 
     @Override
     public void run() {
         
-        if(!(gameManager.isStatus(GameState.WAITING))) {
-            timer = 61;
+        if(!(gameManager.isGameState(GameState.WAITING))) {
+            timer = 31;
             start = false;
             cancel();
             return;
         }
 
-        if(Bukkit.getOnlinePlayers().size() < 1) {
-            Bukkit.broadcastMessage(main.getPrefix() + "§cIl n'y a pas assez de joueurs pour lancer la partie.");
-            timer = 61;
+        if(Bukkit.getOnlinePlayers().size() <= 1) {
+            Bukkit.broadcast(Component.text(main.getPrefix() + "§cIl n'y a pas assez de joueurs pour lancer la partie."));
+            timer = 31;
             start = false;
             cancel();
             return;
@@ -42,14 +46,13 @@ public class LobbyRunnable extends BukkitRunnable {
 
         if(timer <= 0) {
             cancel();
-            gameManager.setGameState(GameState.GAME);
+            // start la game
+            gameManager.setGameState(GameState.STARTING);
             return;
         }
 
         if((timer == 60) || (timer == 30) || (timer == 15) || (timer == 10) || (timer <= 5 && timer != 0)) {
-            String startMessage = main.getPrefix() + "&6Démarrage de la partie dans &e" + timer  + getSecond() + "&6.";
-            ChatColor.translateAlternateColorCodes('&', startMessage);
-            Bukkit.broadcastMessage(startMessage);
+            Bukkit.broadcast(Component.text(main.getPrefix() + "§6Démarrage de la partie dans §e" + timer  + getSecond() + "§6."));
             for(Player players : Bukkit.getOnlinePlayers()) {
                 players.playSound(players.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10f, 1f);
             }

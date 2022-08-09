@@ -8,11 +8,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.cel.dbdplugin.commands.HelloCommand;
 import fr.cel.dbdplugin.commands.ItemCommand;
+import fr.cel.dbdplugin.commands.StartCommand;
 import fr.cel.dbdplugin.commands.TabComplete;
 import fr.cel.dbdplugin.commands.UtilsCommand;
 import fr.cel.dbdplugin.listeners.ListenersManager;
 import fr.cel.dbdplugin.manager.GameManager;
-import net.md_5.bungee.api.ChatColor;
 
 public class DBDPlugin extends JavaPlugin {
 
@@ -33,8 +33,9 @@ public class DBDPlugin extends JavaPlugin {
         getCommand("hello").setExecutor(new HelloCommand());
         getCommand("getspeedplayer").setExecutor(new UtilsCommand(this));
         getCommand("testresourcepack").setExecutor(new UtilsCommand(this));
+        getCommand("start").setExecutor(new StartCommand(gameManager));
 
-        getCommand("dbditem").setExecutor(new ItemCommand());
+        getCommand("dbditem").setExecutor(new ItemCommand(gameManager));
         getCommand("dbditem").setTabCompleter(new TabComplete());
 
         new ListenersManager(this, gameManager).registerListeners();
@@ -47,9 +48,7 @@ public class DBDPlugin extends JavaPlugin {
     }
 
     public String getPrefix() {
-        String prefix = "&4[DBD] &6- ";
-        ChatColor.translateAlternateColorCodes('&', prefix);
-        return prefix;
+        return "§4[DBD] §6-§f ";
     }
 
     public List<UUID> getWaitingPlayer() {

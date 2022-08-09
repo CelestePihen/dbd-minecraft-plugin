@@ -26,8 +26,20 @@ public class PlayerManager {
     }
 
     private void teleport(Player player) {
-        Location spawnGame = new Location(Bukkit.getWorld("world"), 0, 0, 0);
+        Location spawnGame = new Location(Bukkit.getWorld("world"), -140, 72, 0);
         player.teleport(spawnGame);
     }
+
+    // public void giveItemKiller(Player player) {
+    //     player.getInventory().setItemInOffHand(gameManager.getItemKiller().spectreInvi);
+    // }
+
+    public void healPlayers() {
+        Bukkit.getOnlinePlayers().stream().filter(player -> player.getGameMode() == GameMode.ADVENTURE).forEach(this::heal);
+    }
+
+    private void heal(Player player) {
+        player.setHealth(20);
+    } 
 
 }

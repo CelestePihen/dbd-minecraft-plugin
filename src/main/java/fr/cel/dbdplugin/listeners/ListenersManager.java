@@ -12,7 +12,6 @@ public class ListenersManager {
     private PluginManager pm;
     private GameManager gameManager;
 
-
     public ListenersManager(DBDPlugin main, GameManager gameManager) {
         this.main = main;
         this.pm = Bukkit.getPluginManager();
@@ -21,9 +20,8 @@ public class ListenersManager {
 
     public void registerListeners() {
         pm.registerEvents(new PlayerListener(main, gameManager), this.main);
-        pm.registerEvents(new PlayerBlockListener(), this.main);
         pm.registerEvents(new ItemListener(main), this.main);
-        pm.registerEvents(new SpawnListener(), this.main);
+        pm.registerEvents(new SpawnListener(main), this.main);
     }
     
 }

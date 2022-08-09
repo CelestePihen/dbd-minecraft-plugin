@@ -16,6 +16,8 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import net.kyori.adventure.text.Component;
+
 /**
  * Easily create itemstacks, without messing your hands.
  * <i>Note that if you do use this in one of your projects, leave this notice.</i>
@@ -112,7 +114,7 @@ public class ItemBuilder {
      */
     public ItemBuilder setDisplayName(String name){
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(name);
+        im.displayName(Component.text(name));
         is.setItemMeta(im);
         return this;
     }

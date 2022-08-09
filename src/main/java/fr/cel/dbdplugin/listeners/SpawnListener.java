@@ -6,14 +6,20 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
+import fr.cel.dbdplugin.DBDPlugin;
 import fr.cel.dbdplugin.utils.ItemBuilder;
+import net.kyori.adventure.text.Component;
 
 public class SpawnListener implements Listener {
+
+    private DBDPlugin main;
+    public SpawnListener(DBDPlugin main) { this.main = main; }
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
@@ -27,26 +33,56 @@ public class SpawnListener implements Listener {
         }
 
         switch (itemStack.getType()) {
-
             case COMPASS:
             if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
                 switch (itemStack.getItemMeta().getDisplayName()) {
                     case "§cMenu Principal":
-                    createInventory(player);
+                    createMainMenu(player);
                 }
                 
             }
             break;
 
-            default:
-            break;
+            default: break;
         }
     }
 
-    private void createInventory(Player player) {
+    @EventHandler
+    public void onClickInventory(InventoryClickEvent e) {
+        Player player = (Player) e.getWhoClicked();
 
-        String spaceInventoryName = "\uF80A\uF809";
-        Inventory mainMenu = Bukkit.createInventory(null, (9*6), "§f" + spaceInventoryName + "\uF902");
+        if(e.getCurrentItem() == null && e.getAction() != null) return;
+
+        if(e.getView().getTitle() == "§f\uF80A\uF809\uF902") {
+
+            e.setCancelled(true);
+
+            switch(e.getCurrentItem().getItemMeta().getDisplayName()) {
+                case "§cTueur":
+                // rejoindre la team tueur
+                player.sendMessage(main.getPrefix() + "Vous êtes §cTueur §f!");
+                player.closeInventory();
+                break;
+                case "§2Survivant":
+                // rejoindre la team survivant
+                player.sendMessage(main.getPrefix() + "Vous êtes §2Survivant §f!");
+                player.closeInventory();
+                break;
+                case "§7Spectateur":
+                // rejoindre la team spectateur
+                player.sendMessage(main.getPrefix() + "Vous êtes §7Spectateur §f!");
+                player.closeInventory();
+                break;
+            }
+
+        }
+
+
+    }
+
+    private void createMainMenu(Player player) {
+
+        Inventory mainMenu = Bukkit.createInventory(null, (9*6), Component.text("§f\uF80A\uF809\uF902"));
 
         // killer
         ItemStack killer = new ItemBuilder(Material.GOLDEN_HOE).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
