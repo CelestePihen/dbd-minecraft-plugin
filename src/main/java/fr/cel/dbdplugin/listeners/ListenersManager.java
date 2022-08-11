@@ -21,6 +21,7 @@ public class ListenersManager {
     public void registerListeners() {
         pm.registerEvents(new PlayerListener(main, gameManager), this.main);
         pm.registerEvents(new ItemListener(main), this.main);
+        pm.registerEvents(new EntityDamageListener(main), this.main);
         pm.registerEvents(new SpawnListener(main), this.main);
     }
     

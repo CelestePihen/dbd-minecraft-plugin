@@ -15,3 +15,9 @@ commands:
     usage: /testresourcepack
   start:
     description: Commande pour lancer la partie
+  joinsurvivor:
+    description: Commande pour rejoindre le camp des survivants
+  joinkiller:
+    description: Commande pour rejoindre le camp du tueur
+  joinspectator:
+    description: Commande pour rejoindre le camp des spectateurs

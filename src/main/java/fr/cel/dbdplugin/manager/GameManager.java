@@ -1,6 +1,9 @@
 package fr.cel.dbdplugin.manager;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.entity.EnderCrystal;
+import org.bukkit.entity.EntityType;
 
 import fr.cel.dbdplugin.DBDPlugin;
 import fr.cel.dbdplugin.utils.ItemKiller;
@@ -47,7 +50,7 @@ public class GameManager {
             getPlayerManager().clearPlayers();
             getPlayerManager().healPlayers();
             getPlayerManager().teleportPlayers();
-            // faire apparaître les générateurs
+            this.spawnGenerator();
             this.setGameState(GameState.GAME);
 
             break;
@@ -57,6 +60,9 @@ public class GameManager {
             
             this.gameRunnable = new GameRunnable();
             this.gameRunnable.runTaskTimer(main, 0, 20);
+            break;
+
+            case DOOR:
             break;
 
             case END:
@@ -80,5 +86,21 @@ public class GameManager {
     public ItemKiller getItemKiller() {
         return itemKiller;
     }
+
+    private void spawnGenerator() {
+		this.create(new Location(Bukkit.getWorld("world"), -122, 73, -9), "gen1");
+		this.create(new Location(Bukkit.getWorld("world"), -122, 73, -6), "gen2");
+        this.create(new Location(Bukkit.getWorld("world"), -122, 73, -3), "gen3");
+        this.create(new Location(Bukkit.getWorld("world"), -122, 73, 0), "gen4");
+        this.create(new Location(Bukkit.getWorld("world"), -126, 73, 0), "gen5");
+    }
+
+    private void create(Location loc, String name) {
+		EnderCrystal enderCrystal = (EnderCrystal) Bukkit.getWorld("world").spawnEntity(loc, EntityType.ENDER_CRYSTAL);
+        enderCrystal.setCustomName(name);
+		enderCrystal.setCustomNameVisible(false);
+		
+		new GeneratorManager(enderCrystal, name);
+	}
 
 }
