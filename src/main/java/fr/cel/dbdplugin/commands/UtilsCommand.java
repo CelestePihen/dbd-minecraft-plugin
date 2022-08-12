@@ -27,6 +27,10 @@ public class UtilsCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
+        if (label.equalsIgnoreCase("mainmenu")) {
+            player.getInventory().setItem(4, new ItemBuilder(Material.COMPASS).setDisplayName("§cMenu Principal").toItemStack());
+        }
+
         if (label.equalsIgnoreCase("getspeedplayer")) {
             player.sendMessage(main.getPrefix() + "La vitesse du joueur est §e" + player.getWalkSpeed() + "F§f. Normal = 0.2F");
             return true;
@@ -36,8 +40,7 @@ public class UtilsCommand implements CommandExecutor {
             player.sendTitlePart(TitlePart.TITLE, Component.text("Étoile : \uF901"));
             player.sendMessage("Test Resource Pack : \uF901");
 
-            String spaceInventoryName = "\uF80A\uF809";
-            Inventory inventoryTest = Bukkit.createInventory(null, (9*6), Component.text("§f" + spaceInventoryName + "\uF902"));
+            Inventory inventoryTest = Bukkit.createInventory(null, (9*6), Component.text("§f\uF80A\uF809\uF902"));
             inventoryTest.setItem(20, new ItemBuilder(Material.GOLDEN_HOE).toItemStack());
             inventoryTest.setItem(21, new ItemBuilder(Material.GOLDEN_HOE).toItemStack());
             inventoryTest.setItem(29, new ItemBuilder(Material.GOLDEN_HOE).toItemStack());

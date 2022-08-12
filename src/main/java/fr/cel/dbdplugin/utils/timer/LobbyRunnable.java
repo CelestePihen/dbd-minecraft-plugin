@@ -44,7 +44,7 @@ public class LobbyRunnable extends BukkitRunnable {
 
         if (main.getSurvivors().isEmpty() || main.getKiller().isEmpty()) {
             Bukkit.broadcast(Component.text(main.getPrefix()
-                    + "§cIl n'y a pas de survivants ou de tueurs.\nMerci d'avoir au moins 1 survivant et 1 tueur."));
+                    + "§cIl n'y a pas de survivants ou de tueur.\nMerci d'avoir au moins un survivant et un tueur."));
             timer = 11;
             start = false;
             cancel();
@@ -71,7 +71,7 @@ public class LobbyRunnable extends BukkitRunnable {
     }
 
     private String getSecond() {
-        return (timer == 1 || timer == 0) ? " seconde" : " secondes";
+        return timer == 1 ? " seconde" : " secondes";
     }
 
     private void setLevel() {

@@ -21,8 +21,6 @@ public class DBDPlugin extends JavaPlugin {
     private List<UUID> killer = new ArrayList<>();
     private List<UUID> spectators = new ArrayList<>();
 
-    public boolean game, generators, exitdoors = false;
-
     private GameManager gameManager;
 
     @Override

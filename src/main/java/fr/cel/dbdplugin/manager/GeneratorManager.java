@@ -6,16 +6,18 @@ import org.bukkit.entity.EnderCrystal;
 
 public class GeneratorManager {
 
-	private int heart;
-	public String name;
-	public EnderCrystal ec;
+	private int charges;
+	private String name;
+	private EnderCrystal ec;
+	private boolean isPause = false;
 	
 	public static HashMap<String, GeneratorManager> generators = new HashMap<>();
 	
 	public GeneratorManager(EnderCrystal ec, String name) {
 		this.name = name;
-		this.heart = 1000;
+		this.charges = 0;
 		this.ec = ec;
+		this.isPause = false;
 		generators.put(name, this);
 	}
 	
@@ -23,20 +25,28 @@ public class GeneratorManager {
 		return name;
 	}
 	
-	public int getLife() {
-		return heart;
+	public int getCharges() {
+		return charges;
 	}
 	
-	public void setHeart(int heart) {
-		this.heart = heart;
+	public void setCharges(int charges) {
+		this.charges = charges;
 	}
 	
-	public void removeHeart(int i) {
-		this.heart-=i;
+	public void removeCharges(int charges) {
+		this.charges-=charges;
 	}
 
-	public void addHeart(int i) {
-		this.heart+=i;
+	public void addCharges(int charges) {
+		this.charges+=charges;
+	}
+
+	public void setPause(boolean setPause) {
+		this.isPause = setPause;
+	}
+
+	public boolean isPause() {
+		return this.isPause;
 	}
 
 	public EnderCrystal getEc() {

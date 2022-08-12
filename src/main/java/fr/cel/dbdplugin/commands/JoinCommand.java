@@ -23,14 +23,17 @@ public class JoinCommand implements CommandExecutor {
 
         if(label.equalsIgnoreCase("joinsurvivor")) {
             main.getSurvivors().add(player.getUniqueId());
+            player.sendMessage(main.getPrefix() + "Vous êtes §2Survivant §f!");
         }
 
         if(label.equalsIgnoreCase("joinkiller")) {
             main.getKiller().add(player.getUniqueId());
+            player.sendMessage(main.getPrefix() + "Vous êtes §cTueur §f!");
         }
 
         if(label.equalsIgnoreCase("joinspectator")) {
             main.getSpectators().add(player.getUniqueId());
+            player.sendMessage(main.getPrefix() + "Vous êtes §7Spectateur §f!");
         }
 
         return false;

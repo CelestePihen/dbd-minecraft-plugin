@@ -3,10 +3,12 @@ package fr.cel.dbdplugin.manager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.EnderCrystal;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 import fr.cel.dbdplugin.DBDPlugin;
 import fr.cel.dbdplugin.utils.ItemKiller;
+import fr.cel.dbdplugin.utils.timer.DoorRunnable;
 import fr.cel.dbdplugin.utils.timer.GameRunnable;
 import fr.cel.dbdplugin.utils.timer.LobbyRunnable;
 import net.kyori.adventure.text.Component;
@@ -21,6 +23,9 @@ public class GameManager {
 
     private LobbyRunnable lobbyRunnable;
     private GameRunnable gameRunnable;
+    private DoorRunnable doorRunnable;
+
+    private int nGenerator = 5;
 
     public GameManager(DBDPlugin main) {
         this.main = main;
@@ -36,38 +41,52 @@ public class GameManager {
 
         switch (gameState) {
             case WAITING:
-            Bukkit.broadcast(Component.text("Waiting !"));
+                Bukkit.broadcast(Component.text("Waiting !"));
 
-            this.lobbyRunnable = new LobbyRunnable(main, this);
-            this.lobbyRunnable.runTaskTimer(main, 0, 20);
-            break;
+                getPlayerManager().gmAdventure();
+
+                for(Entity e : Bukkit.getWorld("world").getEntities()) {
+                    if(e.getType() == EntityType.ENDER_CRYSTAL) {
+                        e.remove();
+                    }
+                }
+
+                this.lobbyRunnable = new LobbyRunnable(main, this);
+                this.lobbyRunnable.runTaskTimer(main, 0, 20);
+                break;
 
             case STARTING:
-            if (this.lobbyRunnable != null) this.lobbyRunnable.cancel();
+                if (this.lobbyRunnable != null) this.lobbyRunnable.cancel();
             
-            Bukkit.broadcast(Component.text("Starting !"));
+                Bukkit.broadcast(Component.text("Starting !"));
 
-            getPlayerManager().clearPlayers();
-            getPlayerManager().healPlayers();
-            getPlayerManager().teleportPlayers();
-            this.spawnGenerator();
-            this.setGameState(GameState.GAME);
+                getPlayerManager().clearPlayers();
+                getPlayerManager().healPlayers();
+                getPlayerManager().teleportPlayers();
+                this.spawnGenerator();
+                this.setGameState(GameState.GAME);
 
-            break;
+                break;
 
             case GAME:
-            Bukkit.broadcast(Component.text("Game !"));
+                Bukkit.broadcast(Component.text("Game !"));
             
-            this.gameRunnable = new GameRunnable();
-            this.gameRunnable.runTaskTimer(main, 0, 20);
-            break;
+                this.gameRunnable = new GameRunnable();
+                this.gameRunnable.runTaskTimer(main, 0, 20);
+                break;
+
+            case PREDOOR:
+                break;
 
             case DOOR:
-            break;
+                this.doorRunnable = new DoorRunnable();
+                this.doorRunnable.runTaskTimer(main, 0, 20);
+                break;
 
             case END:
-            Bukkit.broadcast(Component.text("End !"));
-            break;
+                Bukkit.broadcast(Component.text("End !"));
+                break;
+            
         }
     }
 
@@ -87,7 +106,16 @@ public class GameManager {
         return itemKiller;
     }
 
+    public int getGenerator() {
+        return this.nGenerator;
+    }
+
+    public int removeGenerator() {
+        return this.nGenerator--;
+    }
+
     private void spawnGenerator() {
+
 		this.create(new Location(Bukkit.getWorld("world"), -122, 73, -9), "gen1");
 		this.create(new Location(Bukkit.getWorld("world"), -122, 73, -6), "gen2");
         this.create(new Location(Bukkit.getWorld("world"), -122, 73, -3), "gen3");
@@ -97,7 +125,7 @@ public class GameManager {
 
     private void create(Location loc, String name) {
 		EnderCrystal enderCrystal = (EnderCrystal) Bukkit.getWorld("world").spawnEntity(loc, EntityType.ENDER_CRYSTAL);
-        enderCrystal.setCustomName(name);
+        enderCrystal.customName(Component.text(name));
 		enderCrystal.setCustomNameVisible(false);
 		
 		new GeneratorManager(enderCrystal, name);

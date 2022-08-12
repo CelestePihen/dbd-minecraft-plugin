@@ -68,7 +68,7 @@ public class PlayerListener implements Listener {
         Player player = e.getPlayer();
         Location loc = player.getLocation().getBlock().getLocation();
 
-        if(gameManager.isGameState(GameState.GAME)) {
+        if(gameManager.isGameState(GameState.GAME) || gameManager.isGameState(GameState.PREDOOR) || gameManager.isGameState(GameState.DOOR)) {
             if (player.getWorld().getBlockAt((int) loc.getX(), (int) loc.getY() - 1, (int) loc.getZ()).getType() != Material.INFESTED_COBBLESTONE) {
                 e.setCancelled(true);
             }

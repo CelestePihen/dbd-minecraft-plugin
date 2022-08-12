@@ -30,6 +30,14 @@ public class PlayerManager {
         player.teleport(spawnGame);
     }
 
+    public void gmAdventure() {
+        Bukkit.getOnlinePlayers().stream().filter(player -> (player.getGameMode() == GameMode.SURVIVAL) || (player.getGameMode() == GameMode.CREATIVE)).forEach(this::gmAdventurePlayers);
+    }
+
+    private void gmAdventurePlayers(Player player) {
+        player.setGameMode(GameMode.ADVENTURE);
+    }
+
     // public void giveItemKiller(Player player) {
     //     player.getInventory().setItemInOffHand(gameManager.getItemKiller().spectreInvi);
     // }
