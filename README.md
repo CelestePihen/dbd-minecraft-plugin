@@ -33,7 +33,6 @@ Pour l'instant, j'ai seulement réutilisé les icônes venant du jeu.
  Mode de jeu :
   - Déroulement partie (Générateurs / Portes / Crochet)
   - Scoreboard
-  - Pouvoir choisir la team
 
  Autres :
  - Resource Pack
