@@ -23,6 +23,7 @@ public class ListenersManager {
         pm.registerEvents(new ItemListener(main), this.main);
         pm.registerEvents(new EntityDamageListener(main, gameManager), this.main);
         pm.registerEvents(new MainMenuListener(main), this.main);
+        pm.registerEvents(new PlayerSneakListener(main, gameManager), this.main);
     }
     
 }

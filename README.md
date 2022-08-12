@@ -28,7 +28,7 @@ Pour l'instant, j'ai seulement réutilisé les icônes venant du jeu.
    - arme
 
  Survivants :
-  - ...
+  - Boîte à outils / Médikit
 
  Mode de jeu :
   - Déroulement partie (Générateurs / Portes / Crochet)
@@ -37,7 +37,6 @@ Pour l'instant, j'ai seulement réutilisé les icônes venant du jeu.
 
  Autres :
  - Resource Pack
- - Mettre en aventure quand on fait la commande /join
 
 ## Autres
 

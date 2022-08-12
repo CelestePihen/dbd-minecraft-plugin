@@ -116,11 +116,11 @@ public class GameManager {
 
     private void spawnGenerator() {
 
-		this.create(new Location(Bukkit.getWorld("world"), -122, 73, -9), "gen1");
-		this.create(new Location(Bukkit.getWorld("world"), -122, 73, -6), "gen2");
-        this.create(new Location(Bukkit.getWorld("world"), -122, 73, -3), "gen3");
-        this.create(new Location(Bukkit.getWorld("world"), -122, 73, 0), "gen4");
-        this.create(new Location(Bukkit.getWorld("world"), -126, 73, 0), "gen5");
+		this.create(new Location(Bukkit.getWorld("world"), -122, 73, -9), "generator1");
+		this.create(new Location(Bukkit.getWorld("world"), -122, 73, -6), "generator2");
+        this.create(new Location(Bukkit.getWorld("world"), -122, 73, -3), "generator3");
+        this.create(new Location(Bukkit.getWorld("world"), -122, 73, 0), "generator4");
+        this.create(new Location(Bukkit.getWorld("world"), -126, 73, 0), "generator5");
     }
 
     private void create(Location loc, String name) {
