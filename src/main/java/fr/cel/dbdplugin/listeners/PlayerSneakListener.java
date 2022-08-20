@@ -9,9 +9,11 @@ import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Shulker;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 
 import fr.cel.dbdplugin.DBDPlugin;
@@ -31,25 +33,20 @@ public class PlayerSneakListener implements Listener {
 	}
 
     @EventHandler
-	public void onSneak(PlayerToggleSneakEvent event) {
-
-        HashMap<UUID, Long> sneakTime = new HashMap<>();
+	public void detectGenerator(PlayerInteractEntityEvent /* jsp quel event mettre juste pour detect un player à côté d'un EndC */ event) {
 
 		Player player = event.getPlayer();
-		boolean isSneaking = player.isSneaking();
 
-		if(isSneaking) {
-			for(Entity entity : player.getNearbyEntities(1, 0, 1)) {
-				if(entity.getType() == EntityType.ENDER_CRYSTAL) {
-					EnderCrystal ec = (EnderCrystal) entity;
-					generator(ec, player, "generator1");
-					generator(ec, player, "generator2");
-					generator(ec, player, "generator3");
-					generator(ec, player, "generator4");
-					generator(ec, player, "generator5");
-				}
+		for (Entity entity : player.getNearbyEntities(1, 0, 1)) {
+			if (entity.getType() == EntityType.ENDER_CRYSTAL) {
+				EnderCrystal ec = (EnderCrystal) entity;
+				generator(ec, player, "generator1");
+				generator(ec, player, "generator2");
+				generator(ec, player, "generator3");
+				generator(ec, player, "generator4");
+				generator(ec, player, "generator5");
 			}
-        }
+		}
 
 	}
 
@@ -58,15 +55,18 @@ public class PlayerSneakListener implements Listener {
 		if (GeneratorManager.generators.get(name) != null) {
 				
 			GeneratorManager gen = GeneratorManager.generators.get(name);
-			EnderCrystal gen2 = gen.getEc();
+			EnderCrystal enderCrystal = gen.getEc();
 			
-			if (ec.equals(gen2)) {
+			if (ec.equals(enderCrystal)) {
 
                 // survivant
                 if (main.getSurvivors().contains(survivor.getUniqueId())) {
 
                     // si le gén est en pause alors on l'enlève
-                    if (gen.isPause()) gen.setPause(false);
+                    if (gen.isPause()) { 
+						gen.setPause(false);
+						survivor.sendMessage(Component.text("Le générateur n'est plus en pause !"));
+					}
 
                     gen.addCharges(1);
                     survivor.sendMessage(Component.text("Générateur " + name + " : " + gen.getCharges() + " charges"));
@@ -82,7 +82,7 @@ public class PlayerSneakListener implements Listener {
 					
 					gen.setCharges(500);
 					
-					if (gen != null) gen2.remove();
+					if (gen != null) enderCrystal.remove();
 					GeneratorManager.generators.remove(name);
 					
 					gameManager.removeGenerator();

@@ -2,7 +2,6 @@ package fr.cel.dbdplugin.listeners;
 
 import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Panda.Gene;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;

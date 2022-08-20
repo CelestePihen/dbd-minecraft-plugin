@@ -15,7 +15,7 @@ import net.kyori.adventure.text.Component;
 
 public class GameManager {
 
-    private final DBDPlugin main;
+    private DBDPlugin main;
     private GameState gameState = GameState.WAITING;
 
     private final PlayerManager playerManager;
@@ -65,7 +65,6 @@ public class GameManager {
                 getPlayerManager().teleportPlayers();
                 this.spawnGenerator();
                 this.setGameState(GameState.GAME);
-
                 break;
 
             case GAME:
@@ -79,7 +78,7 @@ public class GameManager {
                 break;
 
             case DOOR:
-                this.doorRunnable = new DoorRunnable();
+                this.doorRunnable = new DoorRunnable(main);
                 this.doorRunnable.runTaskTimer(main, 0, 20);
                 break;
 
@@ -115,7 +114,6 @@ public class GameManager {
     }
 
     private void spawnGenerator() {
-
 		this.create(new Location(Bukkit.getWorld("world"), -122, 73, -9), "generator1");
 		this.create(new Location(Bukkit.getWorld("world"), -122, 73, -6), "generator2");
         this.create(new Location(Bukkit.getWorld("world"), -122, 73, -3), "generator3");
