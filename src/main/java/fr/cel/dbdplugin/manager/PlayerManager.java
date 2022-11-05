@@ -7,12 +7,6 @@ import org.bukkit.entity.Player;
 
 public class PlayerManager {
 
-    private GameManager gameManager;
-
-    public PlayerManager(GameManager gameManager) {
-        this.gameManager = gameManager;
-    }
-
     public void clearPlayers() {
         Bukkit.getOnlinePlayers().stream().filter(player -> player.getGameMode() == GameMode.ADVENTURE).forEach(this::clear);
     }

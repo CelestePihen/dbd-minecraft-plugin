@@ -29,12 +29,11 @@ public class GameManager {
 
     public GameManager(DBDPlugin main) {
         this.main = main;
-        this.playerManager = new PlayerManager(this);
+        this.playerManager = new PlayerManager();
         this.itemKiller = new ItemKiller();
     }
     
     public void setGameState(GameState gameState) {
-        // if (this.gameState == GameState.WAITING && gameState == GameState.STARTING) return;
         // if (this.gameState == gameState) return;
 
         this.gameState = gameState;
@@ -114,8 +113,8 @@ public class GameManager {
     }
 
     private void spawnGenerator() {
-		this.create(new Location(Bukkit.getWorld("world"), -122, 73, -9), "generator1");
-		this.create(new Location(Bukkit.getWorld("world"), -122, 73, -6), "generator2");
+        this.create(new Location(Bukkit.getWorld("world"), -122, 73, -9), "generator1");
+        this.create(new Location(Bukkit.getWorld("world"), -122, 73, -6), "generator2");
         this.create(new Location(Bukkit.getWorld("world"), -122, 73, -3), "generator3");
         this.create(new Location(Bukkit.getWorld("world"), -122, 73, 0), "generator4");
         this.create(new Location(Bukkit.getWorld("world"), -126, 73, 0), "generator5");

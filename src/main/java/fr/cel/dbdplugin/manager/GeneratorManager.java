@@ -11,7 +11,7 @@ public class GeneratorManager {
 	private EnderCrystal ec;
 	private boolean isPause = false;
 	
-	public static HashMap<String, GeneratorManager> generators = new HashMap<>();
+	private static HashMap<String, GeneratorManager> generators = new HashMap<>();
 	
 	public GeneratorManager(EnderCrystal ec, String name) {
 		this.name = name;
@@ -21,6 +21,10 @@ public class GeneratorManager {
 		generators.put(name, this);
 	}
 	
+	public static HashMap<String, GeneratorManager> getGenerators() {
+		return generators;
+	}
+
 	public String getName() {
 		return name;
 	}

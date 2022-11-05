@@ -13,7 +13,6 @@ import net.kyori.adventure.text.Component;
 public class LobbyRunnable extends BukkitRunnable {
 
     public int timer = 11;
-    public boolean start = false;
 
     private DBDPlugin main;
     private GameManager gameManager;
@@ -28,7 +27,6 @@ public class LobbyRunnable extends BukkitRunnable {
 
         if (!(gameManager.isGameState(GameState.WAITING))) {
             timer = 11;
-            start = false;
             cancel();
             return;
         }
@@ -37,7 +35,6 @@ public class LobbyRunnable extends BukkitRunnable {
             Bukkit.broadcast(
                     Component.text(main.getPrefix() + "§cIl n'y a pas assez de joueurs pour lancer la partie."));
             timer = 11;
-            start = false;
             cancel();
             return;
         }
@@ -46,7 +43,6 @@ public class LobbyRunnable extends BukkitRunnable {
             Bukkit.broadcast(Component.text(main.getPrefix()
                     + "§cIl n'y a pas de survivants ou de tueur.\nMerci d'avoir au moins un survivant et un tueur."));
             timer = 11;
-            start = false;
             cancel();
             return;
         }

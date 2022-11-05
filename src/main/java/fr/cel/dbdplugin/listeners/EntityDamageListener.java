@@ -50,9 +50,9 @@ public class EntityDamageListener implements Listener {
 
 	public void generator(EntityDamageByEntityEvent event, EnderCrystal ec, Player damager, String name) {
 
-		if (GeneratorManager.generators.get(name) != null) {
+		if (GeneratorManager.getGenerators().get(name) != null) {
 			
-			GeneratorManager gen = GeneratorManager.generators.get(name);
+			GeneratorManager gen = GeneratorManager.getGenerators().get(name);
 			EnderCrystal gen2 = gen.getEc();
 			
 			if (ec.equals(gen2)) {

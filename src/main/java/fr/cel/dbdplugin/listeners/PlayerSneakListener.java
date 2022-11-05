@@ -52,9 +52,9 @@ public class PlayerSneakListener implements Listener {
 
     public void generator(EnderCrystal ec, Player survivor, String name) {
 
-		if (GeneratorManager.generators.get(name) != null) {
+		if (GeneratorManager.getGenerators().get(name) != null) {
 				
-			GeneratorManager gen = GeneratorManager.generators.get(name);
+			GeneratorManager gen = GeneratorManager.getGenerators().get(name);
 			EnderCrystal enderCrystal = gen.getEc();
 			
 			if (ec.equals(enderCrystal)) {
@@ -83,7 +83,7 @@ public class PlayerSneakListener implements Listener {
 					gen.setCharges(500);
 					
 					if (gen != null) enderCrystal.remove();
-					GeneratorManager.generators.remove(name);
+					GeneratorManager.getGenerators().remove(name);
 					
 					gameManager.removeGenerator();
 

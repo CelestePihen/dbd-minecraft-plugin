@@ -18,7 +18,7 @@ public class DoorRunnable extends BukkitRunnable {
 
         timer--;
         for(Player players : Bukkit.getOnlinePlayers()) {
-            
+            players.setLevel(timer);
         }
 
         if(timer <= 0) {
