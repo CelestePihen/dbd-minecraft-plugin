@@ -14,7 +14,6 @@ import org.bukkit.Color;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import net.kyori.adventure.text.Component;
 
@@ -93,15 +92,6 @@ public class ItemBuilder {
         return this;
     }
 
-    /**
-     * Sets infinity durability on the item by setting the durability to Short.MAX_VALUE.
-     */
-    @Deprecated
-    public ItemBuilder setInfinityDurability() {
-        is.setDurability(Short.MAX_VALUE);
-        return this;
-    }
-
     public ItemBuilder setUnbreakable() {
         ItemMeta im = is.getItemMeta();
         im.setUnbreakable(true);
@@ -112,9 +102,9 @@ public class ItemBuilder {
      * Set the displayname of the item.
      * @param name The name to change it to.
      */
-    public ItemBuilder setDisplayName(String name){
+    public ItemBuilder setDisplayName(Component component){
         ItemMeta im = is.getItemMeta();
-        im.displayName(Component.text(name));
+        im.displayName(component);
         is.setItemMeta(im);
         return this;
     }
@@ -135,22 +125,6 @@ public class ItemBuilder {
      */
     public ItemBuilder removeEnchantment(Enchantment ench){
         is.removeEnchantment(ench);
-        return this;
-    }
-
-    /**
-     * Set the skull owner for the item. Works on skulls only.
-     * @param owner The name of the skull's owner.
-     */
-    @Deprecated
-    public ItemBuilder setSkullOwner(String owner){
-        try {
-            SkullMeta im = (SkullMeta)is.getItemMeta();
-            im.setOwner(owner);
-            is.setItemMeta(im);
-        } catch (ClassCastException expected) {
-            expected.printStackTrace();
-        }
         return this;
     }
 
@@ -205,7 +179,7 @@ public class ItemBuilder {
     public ItemBuilder removeLoreLine(String line){
         ItemMeta im = is.getItemMeta();
         List<String> lore = new ArrayList<>(im.getLore());
-        if(!lore.contains(line))return this;
+        if(!lore.contains(line)) return this;
         lore.remove(line);
         im.setLore(lore);
         is.setItemMeta(im);
@@ -284,7 +258,7 @@ public class ItemBuilder {
             LeatherArmorMeta im = (LeatherArmorMeta) is.getItemMeta();
             im.setColor(color);
             is.setItemMeta(im);
-        } catch (ClassCastException expected) {}
+        } catch (ClassCastException ignored) {}
         return this;
     }
 

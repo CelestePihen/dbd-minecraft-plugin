@@ -42,6 +42,6 @@ public class PlayerManager {
 
     private void heal(Player player) {
         player.setHealth(20);
-    } 
+    }
 
 }

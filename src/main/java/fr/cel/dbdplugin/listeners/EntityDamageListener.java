@@ -14,26 +14,22 @@ import net.kyori.adventure.text.Component;
 
 public class EntityDamageListener implements Listener {
 
-	private DBDPlugin main;
-	private GameManager gameManager;
+	private final DBDPlugin main;
+	private final GameManager gameManager;
 
     public EntityDamageListener(DBDPlugin main, GameManager gameManager) {
 		this.main = main;
 		this.gameManager = gameManager;
 	}
-
 	
     @EventHandler
     public void onDamage(EntityDamageByEntityEvent event) {
 
         if (!(event.getDamager() instanceof Player)) return;
 
-        if ((event.getEntity() instanceof EnderCrystal) && (event.getDamager() instanceof Player)) {
+        if ((event.getEntity() instanceof EnderCrystal ec) && (event.getDamager() instanceof Player damager)) {
 
-			EnderCrystal ec = (EnderCrystal) event.getEntity();
-			Player damager = (Player) event.getDamager();
-
-			if(main.getSurvivors().contains(damager.getUniqueId())) {
+            if (main.getSurvivors().contains(damager.getUniqueId())) {
 				event.setCancelled(true);
 				return;
 			} 
@@ -43,12 +39,11 @@ public class EntityDamageListener implements Listener {
 			generator(event, ec, damager, "generateur3");
 			generator(event, ec, damager, "generateur4");
 			generator(event, ec, damager, "generateur5");
-			
 		}
 
     }
 
-	public void generator(EntityDamageByEntityEvent event, EnderCrystal ec, Player damager, String name) {
+	private void generator(EntityDamageByEntityEvent event, EnderCrystal ec, Player damager, String name) {
 
 		if (GeneratorManager.getGenerators().get(name) != null) {
 			
@@ -58,8 +53,7 @@ public class EntityDamageListener implements Listener {
 			if (ec.equals(gen2)) {
 
 				// si pas en game ou si un spec "réussit" par une magie inconnue de taper sinon
-				// on annule (pour éviter de faire exploser la map s'il y a des problèmes avec
-				// les EC)
+				// on annule (pour éviter de faire exploser la map s'il y a des problèmes avec les EC)
 				if (!gameManager.isGameState(GameState.GAME) || main.getSpectators().contains(damager.getUniqueId())) {
 					event.setCancelled(true);
 					return;
@@ -69,8 +63,7 @@ public class EntityDamageListener implements Listener {
 
 				// pour pas faire en sorte que le tueur tape en boucle le gén
 				if (gen.isPause()) {
-					damager.sendMessage(
-							Component.text("Vous ne pouvez pas attaquer ce générateur car vous l'avez déjà attaqué !"));
+					damager.sendMessage(Component.text("Vous ne pouvez pas attaquer ce générateur car vous l'avez déjà attaqué !"));
 				}
 
 				// si la vie est égale à 0 alors on le remet à 0 pour éviter les bugs et on ne
@@ -78,19 +71,16 @@ public class EntityDamageListener implements Listener {
 				else if (gen.getCharges() == 0) {
 					gen.setCharges(0);
 					gen.setPause(false);
-					damager.sendMessage(
-							Component.text("Vous ne pouvez pas attaquer ce générateur car il est à 0 charge !"));
+					damager.sendMessage(Component.text("Vous ne pouvez pas attaquer ce générateur car il est à 0 charge !"));
 				}
 
-				// si la vie est inférieur à 100 et si le gén est pas en pause alors on le met à
-				// 0 et en pause
+				// si la vie est inférieur ou égale à 100 et si le gén est pas en pause alors on le met à 0 et en pause
 				else if (gen.getCharges() <= 100 && !gen.isPause()) {
 					gen.setCharges(0);
 					gen.setPause(true);
 				}
 
-				// on prend la vie du gén et on le divise par 2 et ce sera la vie du gén et on
-				// le met en pause
+				// on prend la vie du gén et on le divise par 2 et ce sera la vie du gén et on le met en pause
 				else {
 					gen.removeCharges(gen.getCharges() / 2);
 					gen.setPause(true);

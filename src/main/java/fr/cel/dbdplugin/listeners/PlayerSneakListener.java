@@ -1,8 +1,6 @@
 package fr.cel.dbdplugin.listeners;
 
-import java.util.HashMap;
-import java.util.UUID;
-
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.EnderCrystal;
@@ -11,10 +9,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 import fr.cel.dbdplugin.DBDPlugin;
 import fr.cel.dbdplugin.manager.GameManager;
@@ -24,21 +19,22 @@ import net.kyori.adventure.text.Component;
 
 public class PlayerSneakListener implements Listener {
     
-	private DBDPlugin main;
-	private GameManager gameManager;
+	private final DBDPlugin main;
+	private final GameManager gameManager;
 
     public PlayerSneakListener(DBDPlugin main, GameManager gameManager) {
 		this.main = main;
 		this.gameManager = gameManager;
 	}
 
+	// jsp quel event mettre juste pour detect un player à côté d'un EnderCrystal mdr
     @EventHandler
-	public void detectGenerator(PlayerInteractEntityEvent /* jsp quel event mettre juste pour detect un player à côté d'un EndC */ event) {
+	public void detectGenerator(PlayerInteractEvent event) {
 
 		Player player = event.getPlayer();
 
 		for (Entity entity : player.getNearbyEntities(1, 0, 1)) {
-			if (entity.getType() == EntityType.ENDER_CRYSTAL) {
+			if (entity.getType() == EntityType.END_CRYSTAL) {
 				EnderCrystal ec = (EnderCrystal) entity;
 				generator(ec, player, "generator1");
 				generator(ec, player, "generator2");
@@ -50,15 +46,11 @@ public class PlayerSneakListener implements Listener {
 
 	}
 
-    public void generator(EnderCrystal ec, Player survivor, String name) {
-
-		if (GeneratorManager.getGenerators().get(name) != null) {
-				
-			GeneratorManager gen = GeneratorManager.getGenerators().get(name);
+    private void generator(EnderCrystal ec, Player survivor, String name) {
+		GeneratorManager gen = GeneratorManager.getGenerators().get(name);
+		if (gen != null) {
 			EnderCrystal enderCrystal = gen.getEc();
-			
 			if (ec.equals(enderCrystal)) {
-
                 // survivant
                 if (main.getSurvivors().contains(survivor.getUniqueId())) {
 
@@ -69,7 +61,7 @@ public class PlayerSneakListener implements Listener {
 					}
 
                     gen.addCharges(1);
-                    survivor.sendMessage(Component.text("Générateur " + name + " : " + gen.getCharges() + " charges"));
+                    survivor.sendActionBar(Component.text("Générateur " + name + " : " + gen.getCharges() + " charges"));
 
                     // if ((Math.random() * 100) < 10) { pour les test d'habilité ?
 
@@ -79,25 +71,23 @@ public class PlayerSneakListener implements Listener {
 
                 // générateur fini
                 if (gen.getCharges() >= 500) {
-					
-					gen.setCharges(500);
-					
-					if (gen != null) enderCrystal.remove();
+				    // gen.setCharges(500);
+
+                    enderCrystal.remove();
 					GeneratorManager.getGenerators().remove(name);
 					
 					gameManager.removeGenerator();
 
 					Bukkit.getOnlinePlayers().forEach(players -> {
-						players.sendMessage("§bUn générateur a été effectué ! Il reste " + gameManager.getGenerator() + getGeneratorString() + " à faire !");
-						players.playSound(players.getLocation(), Sound.ENTITY_WITHER_DEATH, 1f, 1f);
+						players.sendMessage(Component.text("Un générateur a été effectué ! Il reste " + gameManager.getGenerator() + getGeneratorString() + " à faire !", NamedTextColor.AQUA));
+						players.playSound(players.getLocation(), Sound.ENTITY_WITHER_DEATH, 0.5f, 0.5f);
 					});
 					
-					if(gameManager.getGenerator() == 0) {
+					if (gameManager.getGenerator() == 0) {
 						gameManager.setGameState(GameState.DOOR);
 						Bukkit.broadcast(Component.text("Les portes sont maintenant activées !"));
 					}
 
-					return;
 				}
 				
 			}

@@ -14,8 +14,8 @@ public class LobbyRunnable extends BukkitRunnable {
 
     public int timer = 11;
 
-    private DBDPlugin main;
-    private GameManager gameManager;
+    private final DBDPlugin main;
+    private final GameManager gameManager;
 
     public LobbyRunnable(DBDPlugin main, GameManager gameManager) {
         this.main = main;
@@ -53,6 +53,7 @@ public class LobbyRunnable extends BukkitRunnable {
         if (timer <= 0) {
             cancel();
             gameManager.setGameState(GameState.STARTING);
+            Bukkit.broadcast(Component.text(main.getPrefix() + "Bug LobbyRunnable"));
             return;
         }
 
@@ -71,10 +72,7 @@ public class LobbyRunnable extends BukkitRunnable {
     }
 
     private void setLevel() {
-        for (Player players : Bukkit.getOnlinePlayers()) {
-            players.setLevel(timer);
-        }
-
+        for (Player players : Bukkit.getOnlinePlayers()) players.setLevel(timer);
     }
 
 }

@@ -9,29 +9,30 @@ import fr.cel.dbdplugin.DBDPlugin;
 
 public class JoinCommand implements CommandExecutor {
 
-    private DBDPlugin main;
-    public JoinCommand(DBDPlugin main) { this.main = main; }
+    private final DBDPlugin main;
+
+    public JoinCommand(DBDPlugin main) {
+        this.main = main;
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         
-        if(!(sender instanceof Player)) {
+        if(!(sender instanceof Player player)) {
             return false;
         }
 
-        Player player = (Player) sender;
-
-        if(label.equalsIgnoreCase("joinsurvivor")) {
+        if (label.equalsIgnoreCase("joinsurvivor")) {
             main.getSurvivors().add(player.getUniqueId());
             player.sendMessage(main.getPrefix() + "Vous êtes §2Survivant §f!");
         }
 
-        if(label.equalsIgnoreCase("joinkiller")) {
+        if (label.equalsIgnoreCase("joinkiller")) {
             main.getKiller().add(player.getUniqueId());
             player.sendMessage(main.getPrefix() + "Vous êtes §cTueur §f!");
         }
 
-        if(label.equalsIgnoreCase("joinspectator")) {
+        if (label.equalsIgnoreCase("joinspectator")) {
             main.getSpectators().add(player.getUniqueId());
             player.sendMessage(main.getPrefix() + "Vous êtes §7Spectateur §f!");
         }

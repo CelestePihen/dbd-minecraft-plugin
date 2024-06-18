@@ -31,19 +31,18 @@ public class MainMenuListener implements Listener {
         Action action = e.getAction();
         ItemStack itemStack = e.getItem();
 
-        if (itemStack == null) {
-            return;
-        }
+        if (itemStack == null) return;
 
         switch (itemStack.getType()) {
             case COMPASS:
-            if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
-                switch (itemStack.getItemMeta().getDisplayName()) {
-                    case "§cMenu Principal":
-                    openMainMenu(player);
-                }
+                if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
+                    switch (itemStack.getItemMeta().getDisplayName()) {
+                        case "§cMenu Principal":
+                            openMainMenu(player);
+                            break;
+                    }
 
-            }
+                }
             break;
 
             default: break;
@@ -115,7 +114,7 @@ public class MainMenuListener implements Listener {
 
         // killer
         ItemStack killer = new ItemBuilder(Material.GOLDEN_HOE).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-                .setDisplayName("§cTueur").setCustomModelData(1).toItemStack();
+                .setDisplayName(Component.text("§cTueur")).setCustomModelData(1).toItemStack();
         mainMenu.setItem(9, killer);
         mainMenu.setItem(10, killer);
         mainMenu.setItem(11, killer);
@@ -128,7 +127,7 @@ public class MainMenuListener implements Listener {
 
         // survivor
         ItemStack survivor = new ItemBuilder(Material.GOLDEN_HOE).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-                .setDisplayName("§2Survivant").setCustomModelData(1).toItemStack();
+                .setDisplayName(Component.text("§2Survivant")).setCustomModelData(1).toItemStack();
         mainMenu.setItem(12, survivor);
         mainMenu.setItem(13, survivor);
         mainMenu.setItem(14, survivor);
@@ -141,7 +140,7 @@ public class MainMenuListener implements Listener {
         
         // survivor
         ItemStack spectator = new ItemBuilder(Material.GOLDEN_HOE).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-                .setDisplayName("§7Spectateur").setCustomModelData(1).toItemStack();
+                .setDisplayName(Component.text("§7Spectateur")).setCustomModelData(1).toItemStack();
         mainMenu.setItem(15, spectator);
         mainMenu.setItem(16, spectator);
         mainMenu.setItem(17, spectator);

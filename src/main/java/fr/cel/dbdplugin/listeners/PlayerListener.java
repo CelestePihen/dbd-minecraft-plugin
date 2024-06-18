@@ -35,7 +35,7 @@ public class PlayerListener implements Listener {
         Player player = e.getPlayer();
 
         e.joinMessage(Component.text(main.getPrefix() + "§e" + player.getName() + " §7a rejoint le serveur §a(" + Bukkit.getOnlinePlayers().size() + "§a/" + Bukkit.getMaxPlayers() + ")"));
-        player.getInventory().setItem(4, new ItemBuilder(Material.COMPASS).setDisplayName("§cMenu Principal").toItemStack());
+        player.getInventory().setItem(4, new ItemBuilder(Material.COMPASS).setDisplayName(Component.text("§cMenu Principal")).toItemStack());
     }
 
     @EventHandler
@@ -68,7 +68,7 @@ public class PlayerListener implements Listener {
         Player player = e.getPlayer();
         Location loc = player.getLocation().getBlock().getLocation();
 
-        if(gameManager.isGameState(GameState.GAME) || gameManager.isGameState(GameState.PREDOOR) || gameManager.isGameState(GameState.DOOR)) {
+        if(gameManager.isGameState(GameState.GAME) || gameManager.isGameState(GameState.PRE_DOOR) || gameManager.isGameState(GameState.DOOR)) {
             if (player.getWorld().getBlockAt((int) loc.getX(), (int) loc.getY() - 1, (int) loc.getZ()).getType() != Material.INFESTED_COBBLESTONE) {
                 e.setCancelled(true);
             }

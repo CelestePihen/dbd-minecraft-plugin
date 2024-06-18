@@ -9,7 +9,7 @@ import fr.cel.dbdplugin.manager.GameState;
 
 public class StartCommand implements CommandExecutor {
 
-    private GameManager gameManager;
+    private final GameManager gameManager;
 
     public StartCommand(GameManager gameManager) {
         this.gameManager = gameManager;
@@ -20,7 +20,5 @@ public class StartCommand implements CommandExecutor {
         gameManager.setGameState(GameState.WAITING);
         return false;
     }
-
-    
     
 }

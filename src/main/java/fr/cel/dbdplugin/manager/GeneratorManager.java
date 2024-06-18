@@ -2,16 +2,19 @@ package fr.cel.dbdplugin.manager;
 
 import java.util.HashMap;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.entity.EnderCrystal;
 
 public class GeneratorManager {
 
-	private int charges;
-	private String name;
-	private EnderCrystal ec;
+	@Setter @Getter private int charges;
+	@Getter private final String name;
+	@Getter private final EnderCrystal ec;
 	private boolean isPause = false;
 	
-	private static HashMap<String, GeneratorManager> generators = new HashMap<>();
+	@Getter
+    private final static HashMap<String, GeneratorManager> generators = new HashMap<>();
 	
 	public GeneratorManager(EnderCrystal ec, String name) {
 		this.name = name;
@@ -20,29 +23,13 @@ public class GeneratorManager {
 		this.isPause = false;
 		generators.put(name, this);
 	}
-	
-	public static HashMap<String, GeneratorManager> getGenerators() {
-		return generators;
+
+    public void addCharges(int charges) {
+		this.charges += charges;
 	}
 
-	public String getName() {
-		return name;
-	}
-	
-	public int getCharges() {
-		return charges;
-	}
-	
-	public void setCharges(int charges) {
-		this.charges = charges;
-	}
-	
 	public void removeCharges(int charges) {
-		this.charges-=charges;
-	}
-
-	public void addCharges(int charges) {
-		this.charges+=charges;
+		this.charges -= charges;
 	}
 
 	public void setPause(boolean setPause) {
@@ -53,7 +40,4 @@ public class GeneratorManager {
 		return this.isPause;
 	}
 
-	public EnderCrystal getEc() {
-		return ec;
-	}
 }

@@ -8,9 +8,9 @@ import fr.cel.dbdplugin.manager.GameManager;
 
 public class ListenersManager {
 
-    private DBDPlugin main;
-    private PluginManager pm;
-    private GameManager gameManager;
+    private final DBDPlugin main;
+    private final PluginManager pm;
+    private final GameManager gameManager;
 
     public ListenersManager(DBDPlugin main, GameManager gameManager) {
         this.main = main;
@@ -19,11 +19,11 @@ public class ListenersManager {
     }
 
     public void registerListeners() {
-        pm.registerEvents(new PlayerListener(main, gameManager), this.main);
-        pm.registerEvents(new ItemListener(main), this.main);
-        pm.registerEvents(new EntityDamageListener(main, gameManager), this.main);
-        pm.registerEvents(new MainMenuListener(main), this.main);
-        pm.registerEvents(new PlayerSneakListener(main, gameManager), this.main);
+        pm.registerEvents(new PlayerListener(main, gameManager), main);
+        pm.registerEvents(new ItemListener(main, gameManager), main);
+        pm.registerEvents(new EntityDamageListener(main, gameManager), main);
+        pm.registerEvents(new MainMenuListener(main), main);
+        pm.registerEvents(new PlayerSneakListener(main, gameManager), main);
     }
     
 }

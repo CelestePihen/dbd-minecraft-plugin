@@ -21,14 +21,12 @@ public class UtilsCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             return true;
         }
 
-        Player player = (Player) sender;
-
         if (label.equalsIgnoreCase("mainmenu")) {
-            player.getInventory().setItem(4, new ItemBuilder(Material.COMPASS).setDisplayName("§cMenu Principal").toItemStack());
+            player.getInventory().setItem(4, new ItemBuilder(Material.COMPASS).setDisplayName(Component.text("§cMenu Principal")).toItemStack());
         }
 
         if (label.equalsIgnoreCase("getspeedplayer")) {

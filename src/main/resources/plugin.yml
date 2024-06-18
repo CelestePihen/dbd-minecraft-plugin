@@ -1,7 +1,7 @@
 main: fr.cel.dbdplugin.DBDPlugin
 name: DBDPlugin
 version: 0.1-SNAPSHOT
-api-version: 1.19
+api-version: 1.20
 commands:
   hello:
     description: Commande de test

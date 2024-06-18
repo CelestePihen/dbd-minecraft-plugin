@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.cel.dbdplugin.commands.HelloCommand;
@@ -15,11 +16,14 @@ import fr.cel.dbdplugin.commands.UtilsCommand;
 import fr.cel.dbdplugin.listeners.ListenersManager;
 import fr.cel.dbdplugin.manager.GameManager;
 
+@Getter
 public class DBDPlugin extends JavaPlugin {
 
-    private List<UUID> survivors = new ArrayList<>();
-    private List<UUID> killer = new ArrayList<>();
-    private List<UUID> spectators = new ArrayList<>();
+    private final List<UUID> survivors = new ArrayList<>();
+    private final List<UUID> killer = new ArrayList<>();
+    private final List<UUID> spectators = new ArrayList<>();
+
+    private final String prefix = "§4[DBD] §6-§r";
 
     private GameManager gameManager;
 
@@ -27,7 +31,8 @@ public class DBDPlugin extends JavaPlugin {
     public void onEnable() {
         getLogger().info("[DBD-Plugin] Plugin active");
 
-        this.gameManager = new GameManager(this);
+        gameManager = new GameManager(this);
+        new ListenersManager(this, gameManager).registerListeners();
 
         getCommand("hello").setExecutor(new HelloCommand());
         getCommand("getspeedplayer").setExecutor(new UtilsCommand(this));
@@ -40,9 +45,6 @@ public class DBDPlugin extends JavaPlugin {
 
         getCommand("dbditem").setExecutor(new ItemCommand(gameManager));
         getCommand("dbditem").setTabCompleter(new TabComplete());
-
-        new ListenersManager(this, gameManager).registerListeners();
-        
     }
 
     @Override
@@ -50,20 +52,4 @@ public class DBDPlugin extends JavaPlugin {
         getLogger().info("[DBD-Plugin] Plugin desactive");
     }
 
-    public String getPrefix() {
-        return "§4[DBD] §6-§f ";
-    }
-
-    public List<UUID> getKiller() {
-        return killer;
-    }
-
-    public List<UUID> getSurvivors() {
-        return survivors;
-    }
-
-    public List<UUID> getSpectators() {
-        return spectators;
-    }
-    
 }
