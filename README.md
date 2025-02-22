@@ -1,4 +1,5 @@
 # IMPORTANT : This project is in pause for the moment.
+## I have a lot of things to modify in the project because I haven't really modify it since the latest commit in 2022 and I have progressed a lot in Minecraft plugins since there.
 
 
 
